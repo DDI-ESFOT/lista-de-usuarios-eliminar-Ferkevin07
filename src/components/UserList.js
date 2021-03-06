@@ -10,6 +10,7 @@ function formatName(user) {
 const UserList = ({ users }) => {
   const [usersList, setUsersList] = useState(users);
 
+
   const handleAddUser = (event) => {
     // console.log("event", event);
     console.log("Añadir");
@@ -26,20 +27,31 @@ const UserList = ({ users }) => {
       return [...prevUsersList, newUser];
     });
 
+
     document.querySelector("#name").value = "";
     document.querySelector("#lastname").value = "";
   };
 
-  return (
+  const handleRemove = () =>{
+
+    setUsersList((prevUsersList) => {
+      // Spread operator
+      prevUsersList.pop();
+      return [...prevUsersList];
+    });
+
+  }
+
+    return (
     <>
       <h1>Lista de usuarios ({usersList.length} usuarios)</h1>
       <input type="text" id="name" placeholder="Ingrese un nombre" />
       <input type="text" id="lastname" placeholder="Ingrese un apellido" />
       <button onClick={handleAddUser}>Añadir</button>
-      <button>Eliminar el último usuario</button>
+      <button onClick={handleRemove}>Eliminar el último usuario</button>
       <ul>
         {usersList.map((user, index) => {
-          return <li key={Math.random()}>{formatName(user)}</li>;
+          return <li key={index}>{formatName(user)}</li>
         })}
       </ul>
     </>
